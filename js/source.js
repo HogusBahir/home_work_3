@@ -99,9 +99,132 @@ $(function () {
     // Do not modify the JS objects above. You will write your code below.
     // *********************************************************************
 
+    //Selecting the text from above and adding it into the html's id's
 
+    //$("{text from above}").text({html id})
+    $(".revenue-amt").text(revenueAmt);
+    $("#customer-num").text(customerNum);
+    $("#orders-amt").text(ordersAmt);
+    $("#issues-amt").text(issuesAmt);
+    $("#username").text(username);
+    $("#notification-num").text(notifAmt);
 
-       
+    //Declaring variables
+    var customerlist, saleslist, activitieslist, messageslist, notiflist, tasklist  
+
+    //Grabbing all the id's from html and assigning each to their respective var
+    saleslist = $("#salesTableBody")
+    customerlist = $("#customerTableBody")
+    activitieslist = $("#activity-list")
+    messageslist = $("#system-status-list")
+    notiflist = $("#notifications-list")
+    tasklist = $("#tasks-list")
+
+    $("button").button();
+    $("#dashboardTabs").tabs();
+    $("#customerDialog").dialog({
+        autoOpen: false, 
+        modal: true, 
+        width: 450, 
+        buttons: { 
+            "Create Customer": function () { 
+                var name = $("#customerName").val(); 
+                var email = $("#customerEmail").val(); 
+                if (!name || !email) { 
+                    alert( 
+                        "Please enter a name and email." 
+                    ); 
+                    return; 
+                } 
+ 
+                alert("Customer created: " + name); 
+                $(this).dialog("close"); 
+            }, 
+            "Cancel": function () { 
+                $(this).dialog("close"); 
+            } 
+        }
+    });
+
+    $("#accordion").accordion({
+        collapsible: true, 
+        heightStyle: "content" 
+    });
+    
+    $("#newCustomerButton").click(function(){
+        $("#customerDialog").dialog("open");
+    });
+
+    $( "#customerDate" ).datepicker({
+        altField: "#actualDate"
+    });
+
+    function customerbuild(){
+        customers.forEach(customers =>{
+            customerlist.append(
+                `<tr>
+                    <td>${customers.name}</td>
+                    <td>${customers.email}</td>
+                    <td>${customers.status}</td>
+                    <td>${customers.joined}</td>
+                </tr>`
+            );
+        })
+    }
+customerbuild();
+    
+    function salesbuild(){
+        sales.forEach(sales => {
+            saleslist.append(
+                `<tr>
+                    <td>${sales.product}</td>
+                    <td>${sales.quantity}</td>
+                    <td>${sales.revenue}</td>
+                </tr>
+                `
+            );
+        })
+    }
+salesbuild();
+
+    function activitybuild(){
+        activities.forEach(activities => {
+            activitieslist.append(
+                `
+                <li>${activities.message}</li>
+                `
+            );
+        })
+    }
+activitybuild();
+
+function messagebuild(){
+    messages.forEach(messages => {
+        messageslist.append(
+            `<li>${messages.messsage}</li>
+            `
+        );
+    })
+}
+messagebuild();
+
+function notifbuild(){
+    notifications.forEach(notifications => {
+        notiflist.append(
+            `<li>${notifications.messsage}</li>`
+        );
+    })
+}
+notifbuild();
+
+function taskbuild(){
+    tasks.forEach(tasks => {
+        tasklist.append(
+            `<li>${tasks.messsage}</li>`
+        );
+    })
+}
+taskbuild();
 
 
     });
